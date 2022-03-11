@@ -12,7 +12,7 @@ new Vue({
     const query = `
       query {
         getTodos {
-        id title done createdAt updatedAt
+          id title done createdAt updatedAt
         }
       }
     `
@@ -23,12 +23,12 @@ new Vue({
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       },
-      body: JSON.stringify({query})
+      body: JSON.stringify({ query })
     })
-        .then(res => res.json())
-        .then(response => {
-          this.todos = response.data.getTodos
-        })
+      .then(res => res.json())
+      .then(response => {
+        this.todos = response.data.getTodos
+      })
   },
   methods: {
     addTodo() {
@@ -36,13 +36,24 @@ new Vue({
       if (!title) {
         return
       }
-      fetch('/api/todo', {
+      const query = `
+        mutation {
+          createTodo(todo: {title: "${title}"}) {
+            id title done createdAt updatedAt
+          }
+        }
+      `
+      fetch('/graphql', {
         method: 'post',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({title})
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({query})
       })
         .then(res => res.json())
-        .then(({todo}) => {
+        .then(response => {
+          const todo = response.data.createTodo
           this.todos.push(todo)
           this.todoTitle = ''
         })
