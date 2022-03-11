@@ -21,6 +21,8 @@
   "homepage": "https://github.com/RuslanPostnikov/mySQL-REST-API-app#readme",
   "dependencies": {
     "express": "^4.17.3",
+    "express-graphql": "^0.12.0",
+    "graphql": "^15.8.0",
     "mysql2": "^2.3.3",
     "sequelize": "^6.17.0"
   },
